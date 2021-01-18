@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'antlr'
+    id "org.jetbrains.kotlin.jvm" version "1.4.21"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr "org.antlr:antlr4:4.7.1" // use ANTLR version 4
+//    implementation "org.antlr:antlr4-runtime:4.7.1" // use ANTLR version 4
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+generateGrammarSource {
+    println "Copying generated grammar lexer/parser files to main directory."
+    maxHeapSize = "64m"
+//    copy {
+//        from "${buildDir}/generated-src/antlr/main"
+//        into "src/main/java"
+//    }
+}
+
+kotlin {
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2'
+            }
+        }
+    }
+}
